@@ -7,6 +7,7 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1
   def show
     @restaurant = Restaurant.find(params[:id])
+    @review = Review.new
   end
 
   # GET /restaurants/new
@@ -19,13 +20,14 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.new(restaurant_params)
 
     if @restaurant.save
-      redirect_to @restaurant, notice: 'Restaurant was successfully created.'
+      redirect_to @restaurant
     else
       render :new
     end
   end
 
   private
+
     # Only allow a list of trusted parameters through.
     def restaurant_params
       params.require(:restaurant).permit(:name, :address, :phone_number, :category)
